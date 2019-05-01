@@ -1,10 +1,10 @@
 const express = require("express");
 const Users = require("./helpers/userDb");
-//const { nameChecker } = require("./middleware");
+const capsChecker = require("./middleware");
 
 const router = express.Router();
 //=================================================Post Routers
-router.post("/", (req, res) => {
+router.post("/", capsChecker, (req, res) => {
   req.body.name
     ? Users.insert(req.body)
         .then(user => {
