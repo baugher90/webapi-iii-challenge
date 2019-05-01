@@ -1,13 +1,14 @@
 const express = require('express'); 
 const helmet= require("helmet");
 const morgan = require("morgan");
+//const middleware = require('./data/middleware')
 
 const postRouter = require("./data/postRouter");
 const userRouter = require("./data/userRouter");
 const server = express();
 
 server.use(express.json(), helmet(), morgan('dev'))
-server.use("/api/users", userRouter);
+server.use("/api/users",userRouter);
 server.use("/api/posts", postRouter);
 
 
