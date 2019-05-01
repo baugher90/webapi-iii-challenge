@@ -1,7 +1,6 @@
 const express = require('express'); 
 const helmet= require("helmet");
 const morgan = require("morgan");
-//const middleware = require('./data/middleware')
 
 const postRouter = require("./data/postRouter");
 const userRouter = require("./data/userRouter");
