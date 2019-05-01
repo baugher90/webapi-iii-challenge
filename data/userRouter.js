@@ -21,7 +21,7 @@ router.post("/", (req, res) => {
 router.get("/", (req, res) => {
   Users.get()
     .then(user => {
-      res.status(200).json({user});
+      res.status(200).json({ user });
     })
     .catch(err => {
       res.status(500).json({ message: "cannot GET data" });
@@ -29,9 +29,9 @@ router.get("/", (req, res) => {
 });
 //---------------------------------------By ID
 router.get("/:id", (req, res) => {
-  const id = req.params.id||'';
+  const id = req.params.id || "";
 
-  !id||id.length<0
+  !id || id.length < 0
     ? res.status(404).json({ message: "No user found" })
     : Users.getById(id)
         .then(user => {
@@ -45,7 +45,26 @@ router.get("/:id", (req, res) => {
 
 //=================================================Update Routers
 router.put("/:id", (req, res) => {
-
+  !req.params.id || !req.body
+    ? res.status(400).json({
+        error:
+          "Please provide the ID of the user you intend to update as well as your intended changes."
+      })
+    : Users.update(req.params.id, req.body)
+        .then(user => {
+          user
+            ? res
+                .status(200)
+                .json({ message: "You successfully updated the user." })
+            : res.status(404).json({
+                message: "The user with the specified ID does not exist."
+              });
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: "The user information could not be updated." });
+        });
 });
 //=================================================Delete Routers
 router.delete("/:id", (req, res) => {
